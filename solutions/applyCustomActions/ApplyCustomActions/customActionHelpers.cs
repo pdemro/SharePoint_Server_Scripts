@@ -10,11 +10,13 @@ namespace ApplyCustomActions
 {
     public static class CustomActionHelpers
     {
+        private const string customActionName = "Test Custom Action";
+
         public static void SetCustomAction(Web web)
         {
             var targetAction = web.UserCustomActions.Add();
 
-            targetAction.Name = "Test Custom Action";
+            targetAction.Name = customActionName;
             targetAction.Description = "Test Custom Action Description";
             targetAction.Location = "ScriptLink";
             targetAction.Sequence = 100;
@@ -26,9 +28,24 @@ namespace ApplyCustomActions
             web.Context.ExecuteQueryRetry();
         }
 
-        public static void Test()
+        public static void DeleteCustomAction(Web web)
         {
-            //do nothing Phil
+            var existingActions = web.UserCustomActions;
+
+            web.Context.Load(existingActions);
+            web.Context.ExecuteQueryRetry();
+
+            var targetAction = web.UserCustomActions.FirstOrDefault(uca => uca.Name == customActionName);
+            if (targetAction != null)
+            {
+                targetAction.DeleteObject();
+                web.Context.ExecuteQueryRetry();
+                Console.WriteLine("Deleted custom action {0} from site {1}", customActionName, web.Url);
+            }
+            else
+            {
+                Console.WriteLine("Did not find custom action {0} on site {1}", customActionName, web.Url);
+            }
         }
     }
 }

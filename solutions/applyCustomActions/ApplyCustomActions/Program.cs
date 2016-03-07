@@ -48,12 +48,13 @@ namespace ApplyCustomActions
             using (var context = new ClientContext(webUrl))
             {
                 context.Credentials = new SharePointOnlineCredentials(userName, password);
-                context.Load(context.Web, w => w.Title);
+                context.Load(context.Web, w => w.Title, w=> w.Url);
                 context.ExecuteQuery();
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Your site title is: " + context.Web.Title);
                 Console.WriteLine("Setting custom action..");
+                //CustomActionHelpers.DeleteCustomAction(context.Web);
                 CustomActionHelpers.SetCustomAction(context.Web);
 
                 Console.ForegroundColor = defaultForeground;
