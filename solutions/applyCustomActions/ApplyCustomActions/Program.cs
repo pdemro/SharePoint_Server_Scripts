@@ -45,8 +45,6 @@ namespace ApplyCustomActions
             //}
 
             
-
-
             using (var context = new ClientContext(webUrl))
             {
                 context.Credentials = new SharePointOnlineCredentials(userName, password);
@@ -56,29 +54,12 @@ namespace ApplyCustomActions
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Your site title is: " + context.Web.Title);
                 Console.WriteLine("Setting custom action..");
-                SetCustomAction(context.Web);
-
+                CustomActionHelpers.SetCustomAction(context.Web);
 
                 Console.ForegroundColor = defaultForeground;
                 Console.ReadLine();
             }
 
-        }
-
-        private static void SetCustomAction(Web web)
-        {
-            var targetAction = web.UserCustomActions.Add();
-
-            targetAction.Name = "Test Custom Action";
-            targetAction.Description = "Test Custom Action Description";
-            targetAction.Location = "ScriptLink";
-            targetAction.Sequence = 100;
-            targetAction.ScriptSrc = "~SiteCollection/_catalogs/_app/test/test.js";
-
-            targetAction.Update();
-
-            web.Context.Load(web, w => w.UserCustomActions);
-            web.Context.ExecuteQueryRetry();
         }
 
         private static SecureString GetPasswordFromConsoleInput()
