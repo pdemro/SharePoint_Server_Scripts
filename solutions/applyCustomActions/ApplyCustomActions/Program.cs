@@ -22,23 +22,28 @@ namespace ApplyCustomActions
             Console.WriteLine("Enter the URL of the SharePoint Online site:");
 
             Console.ForegroundColor = defaultForeground;
-            //string webUrl = Console.ReadLine();
-            string webUrl = "https://mod821521.sharepoint.com/sites/demroTeam/test2";
+            string webUrl = Console.ReadLine();
+            //string webUrl = "https://mod821521.sharepoint.com/sites/demroTeam/test2";
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Enter your user name (ex: kirke@mytenant.microsoftonline.com):");
             Console.ForegroundColor = defaultForeground;
-            //string userName = Console.ReadLine();
-            string userName = "pdemro@mod821521.onmicrosoft.com";
+            string userName = Console.ReadLine();
+            //string userName = "pdemro@mod821521.onmicrosoft.com";
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Enter your password.");
             Console.ForegroundColor = defaultForeground;
+            var password = GetPasswordFromConsoleInput();
 
-            
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Enter the script link URL");
+            Console.ForegroundColor = defaultForeground;
+            var scriptLink = Console.ReadLine();
+
 
             //var password = new SecureString();
-            var password = GetPasswordFromConsoleInput();
             //foreach (var c in passwordArray)
             //{
             //    password.AppendChar(c);
@@ -55,7 +60,7 @@ namespace ApplyCustomActions
                 Console.WriteLine("Your site title is: " + context.Web.Title);
                 Console.WriteLine("Setting custom action..");
                 //CustomActionHelpers.DeleteCustomAction(context.Web);
-                CustomActionHelpers.SetCustomAction(context.Web);
+                CustomActionHelpers.SetCustomAction(context.Web, scriptLink);
 
                 Console.ForegroundColor = defaultForeground;
                 Console.ReadLine();

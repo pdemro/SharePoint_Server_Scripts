@@ -12,7 +12,7 @@ namespace ApplyCustomActions
     {
         private const string customActionName = "Test Custom Action";
 
-        public static void SetCustomAction(Web web)
+        public static void SetCustomAction(Web web, string scriptLink)
         {
             var targetAction = web.UserCustomActions.Add();
 
@@ -20,7 +20,7 @@ namespace ApplyCustomActions
             targetAction.Description = "Test Custom Action Description";
             targetAction.Location = "ScriptLink";
             targetAction.Sequence = 100;
-            targetAction.ScriptSrc = "~SiteCollection/_catalogs/_app/test/test.js";
+            targetAction.ScriptSrc = scriptLink;
 
             targetAction.Update();
 
