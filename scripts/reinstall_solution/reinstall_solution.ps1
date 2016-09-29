@@ -1,15 +1,16 @@
 ﻿add-pssnapin microsoft.sharepoint.powershell
 
-$webUrl = "http://chnmicsp01/"
-$caUrl = "https://caf06.mantech.com"
-$solutionName = "customkeywordsearch.wsp"
+$webUrl = "http://sharepoint"
+$caUrl = "https://sharepointCa:12345"
+$solutionName = "customsolution.wsp"
 $solutionDir = "c:\users\a-pdemro\documents\"
 $solutionFullName = $solutionDir + $solutionName
+$dependenciesPath = "C:\users\a-pdemro\source\repos\SharePoint_Server_Scripts\scripts\reinstall_solution\dependencies"
 
 $farm = get-spfarm
 $solution = $farm.Solutions | where-object {$_.Name -eq $solutionName}
 
-uninstall-spsolution -identity customkeywordsearch.wsp -webapplication $webUrl -Confirm:$false
+uninstall-spsolution -identity $solutionName -webapplication $webUrl -Confirm:$false
 
 while($solution.Deployed -eq $true){
     write-host "waiting to uninstall.."
@@ -33,11 +34,11 @@ start-sleep -seconds 10
 install-spsolution -identity $solutionName -gacdeployment -webapplication $webUrl
 
 $farm = get-spfarm
-$customKeywordSearchSol = $farm.Solutions | where-object {$_.Name -eq $solutionName}
+$solution = $farm.Solutions | where-object {$_.Name -eq $solutionName}
 
-while($customKeywordSearchSol.Status -ne "Online") {
+while($solution.Status -ne "Online") {
     write-host "waiting for the solution to be deployed"
     start-sleep -seconds 5
 }
 
-.\dependencies\spbestwarmup.ps1 -url $webUrl,$caUrl
+C:\users\a-pdemro\source\repos\SharePoint_Server_Scripts\scripts\reinstall_solution\dependencies\spbestwarmup.ps1 -url $webUrl,$caUrl
