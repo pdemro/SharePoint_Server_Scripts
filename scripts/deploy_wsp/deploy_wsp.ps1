@@ -12,6 +12,11 @@ try {   # Wrap in a try-catch in case we try to add this type twice.
              
             // The path to the Application, relative to the Website root.
             public string LiteralPath { get; set; }
+
+            public WspDeploymentObject(string identity, string literalPath) {
+                this.Identity = identity;
+                this.LiteralPath = literalPath;
+            }
         }
 "@
 } catch {}
@@ -57,7 +62,7 @@ function deployWsp {
         add-spsolution -literalpath $solutionFullName
 
         write-host "Added solution.. giving it a few seconds"
-        start-sleep -seconds 5
+        start-sleep -seconds 10
 
         install-spsolution -identity $solutionName -gacdeployment -Force
 
@@ -66,6 +71,7 @@ function deployWsp {
 
         start-sleep -seconds 10
 
+        #TODO if this iterates more than 10 times then re-attempt the install
         while ($customKeywordSearchSol.Deployed -eq $false) {
             write-host "waiting for the solution to be deployed"
             start-sleep -seconds 5
@@ -89,6 +95,6 @@ function deployWsp {
     
     # $warmupWebs = "http://win-bon5g1qr9mv:2016/", $siteUrl, "http://cv.sp16.com/sites/DemroXI"
     # C:\Users\pdemro\source\repos\SharePoint_Server_Scripts\scripts\reinstall_solution\dependencies\spbestwarmup.ps1 -url $warmupWebs
-    ..\spbestwarmup\SPBestWarmUp.ps1 #assumes spbestwarmup is in the path
+    ..\spbestwarmup\SPBestWarmUp.ps1
 }
 

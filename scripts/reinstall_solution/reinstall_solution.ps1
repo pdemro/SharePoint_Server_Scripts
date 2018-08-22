@@ -79,6 +79,7 @@ function upgradeSolution {
 }
 
 #Make sure to build/save packages in visual studio prior to executing this script
+#todo add this piece to a config file
 msbuild /t:Package C:\wsb\cvng\Mantech-ConstantView-Upgrade\src\Mantech.ConstantView.SharePoint.Solution\Mantech.ConstantView.SharePoint.Solution.csproj
 mv C:\wsb\cvng\Mantech-ConstantView-Upgrade\src\Mantech.ConstantView.SharePoint.Solution\bin\Debug\Mantech.ConstantView.SharePoint.wsp C:\wsb\cvng\Mantech-ConstantView-Upgrade\Mantech.ConstantView.SharePoint.wsp -Force
 
