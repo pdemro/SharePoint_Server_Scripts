@@ -1,0 +1,3 @@
+[submodule "scripts/spbestwarmup"]
+	path = scripts/spbestwarmup
+	url = https://github.com/spjeff/spbestwarmup.git
