@@ -82,9 +82,12 @@ function deployWsp {
 
     if($deploymentArray) {
         foreach ($deploymentObject in $deploymentArray) {
+            write-host "Deploying $($deploymentObject.Identity) from $($deploymentObject.LiteralPath)"
             reinstallSolution -identity $deploymentObject.Identity -literalPath $deploymentObject.LiteralPath
         }
     } else {
+        write-host "Deploying $($Identity) from $($LiteralPath)"
+
         reinstallSolution -identity $identity -literalPath $literalPath
     }
 
@@ -95,6 +98,6 @@ function deployWsp {
     
     # $warmupWebs = "http://win-bon5g1qr9mv:2016/", $siteUrl, "http://cv.sp16.com/sites/DemroXI"
     # C:\Users\pdemro\source\repos\SharePoint_Server_Scripts\scripts\reinstall_solution\dependencies\spbestwarmup.ps1 -url $warmupWebs
-    ..\spbestwarmup\SPBestWarmUp.ps1
+    D:\wsb\SharePoint_Server_Scripts\scripts\spbestwarmup\SPBestWarmUp.ps1
 }
 

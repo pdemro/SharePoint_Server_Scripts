@@ -1,4 +1,4 @@
-. ".\deploy_wsp.ps1"
+. "D:\wsb\SharePoint_Server_Scripts\scripts\deploy_wsp\deployHelper.ps1"
 
 #TODO - make this pull the latest modified folder and build the object
 
@@ -40,7 +40,7 @@ function createDeploymentArray{
     return $WspDeploymentObject
 }
 
-$folder = getLatestFolder -folder "C:\Users\pdemro\Desktop\deployment"
+$folder = getLatestFolder -folder "D:\wsb\deployment"
 
 $wsps = getWsps -folder $folder.FullName
 
